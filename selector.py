@@ -1,3 +1,4 @@
+from PIL import Image
 import pygame
 import sys
 
@@ -7,6 +8,9 @@ pygame.init()
 # Load an image
 IMAGE_PATH = "Sargent2.png"  # Change this to your image path
 image = pygame.image.load(IMAGE_PATH)
+
+#Pillow is used to get pixel values
+pil_img = Image.open(IMAGE_PATH).convert('L')
 
 # Set up display
 WIDTH, HEIGHT = image.get_size()
@@ -47,6 +51,16 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN: #Mouse select
             mx, my = pygame.mouse.get_pos()
             selected_cell = (mx // CELL_WIDTH, my // CELL_HEIGHT)
+
+            #Get pixels
+            pixels = []
+            for y in range(selected_cell[1]*CELL_HEIGHT,(selected_cell[1]+1)*CELL_HEIGHT):
+                row = []
+                for x in range(selected_cell[0]*CELL_WIDTH,(selected_cell[0]+1)*CELL_WIDTH):
+                    pixel_value = pil_img.getpixel((x, y))
+                    row.append(pixel_value)
+                pixels.append(row)
+            
 
 pygame.quit()
 sys.exit()
