@@ -60,6 +60,21 @@ while running:
                     pixel_value = pil_img.getpixel((x, y))
                     row.append(pixel_value)
                 pixels.append(row)
+
+            with open('pixel.img','w') as file:
+                for y in range(0,CELL_HEIGHT,2):
+                    for x in range(0,CELL_WIDTH,2):
+                        if  (x < CELL_WIDTH-1 and y < CELL_HEIGHT-1): 
+                            pixel1 = pixels[x][y]
+                            pixel2 = pixels[x][y+1]
+                            pixel3 = pixels[x+1][y]
+                            pixel4 = pixels[x+1][y+1]
+
+                            file.write(f"{pixel1}\n")
+                            file.write(f"{pixel2}\n")
+                            file.write(f"{pixel3}\n")
+                            file.write(f"{pixel4}\n")
+
             
 
 pygame.quit()
