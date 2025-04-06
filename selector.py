@@ -1,6 +1,7 @@
 from PIL import Image
 import pygame
 import sys
+import numpy as np
 
 # Initialize pygame
 pygame.init()
@@ -14,7 +15,7 @@ pil_img = Image.open(IMAGE_PATH).convert('L')
 
 # Set up display
 WIDTH, HEIGHT = image.get_size()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH*2, HEIGHT))
 pygame.display.set_caption("Proyecto 1 Arquitectura Computadores")
 
 # Grid settings
@@ -27,6 +28,7 @@ selected_cell = None
 
 # Main loop
 running = True
+np_array = np.array([])
 while running:
     screen.blit(image, (0, 0))
     
@@ -40,6 +42,13 @@ while running:
     if selected_cell:
         x, y = selected_cell
         pygame.draw.rect(screen, (255, 0, 0), (x * CELL_WIDTH, y * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT), 3)
+
+    if (np_array.size > 0):
+        np_array = np_array.astype(np.uint8) 
+        cuadrant_img = Image.fromarray(np_array)
+        cuadrant_img.save("cuadrant_img.png")
+        cuadrant_img = pygame.image.load("cuadrant_img.png")
+        screen.blit(cuadrant_img,(WIDTH,0))
     
     #Update
     pygame.display.flip()
@@ -60,7 +69,9 @@ while running:
                     pixel_value = pil_img.getpixel((x, y))
                     row.append(pixel_value)
                 pixels.append(row)
+            np_array = np.array(pixels)
 
+            #Write pixel values to .img
             with open('pixel.img','w') as file:
                 for y in range(0,CELL_HEIGHT,2):
                     for x in range(0,CELL_WIDTH,2):
@@ -74,6 +85,8 @@ while running:
                             file.write(f"{pixel2}\n")
                             file.write(f"{pixel3}\n")
                             file.write(f"{pixel4}\n")
+
+            3
 
             
 
