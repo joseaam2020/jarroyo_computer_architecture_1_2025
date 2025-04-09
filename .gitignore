@@ -175,4 +175,5 @@ cython_debug/
 
 pixel.img
 cuadrant_img.png
-
+*.o
+program

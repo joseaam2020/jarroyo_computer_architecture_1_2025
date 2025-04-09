@@ -86,7 +86,7 @@ while running:
                             file.write(f"{pixel3}\n")
                             file.write(f"{pixel4}\n")
 
-            3
+            #Llamar codigo ensamblador
 
             
 
