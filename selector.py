@@ -73,8 +73,8 @@ while running:
 
             #Write pixel values to .img
             with open('pixel.img','w') as file:
-                for y in range(0,CELL_HEIGHT,2):
-                    for x in range(0,CELL_WIDTH,2):
+                for y in range(0,CELL_HEIGHT,1):
+                    for x in range(0,CELL_WIDTH,1):
                         if  (x < CELL_WIDTH-1 and y < CELL_HEIGHT-1): 
                             pixel1 = pixels[x][y]
                             pixel2 = pixels[x][y+1]
