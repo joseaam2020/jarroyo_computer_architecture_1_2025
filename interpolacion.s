@@ -3,6 +3,7 @@ section .bss
     aristas: resb 8
     centro: resb 4
 section .text
+extern write
 global interpolacion
 interpolacion:
     ;Pop return address
@@ -52,6 +53,10 @@ interpolacion:
     lea ebx,[aristas]
     mov byte [ebx], al
 
+    ;Writes value
+    push eax
+    call write
+
     ;Arista2 
     lea eax, [pixels]    ;1/3 * pixel1
     mov ebx, 0
@@ -81,6 +86,9 @@ interpolacion:
     add ebx,1
     mov byte [ebx], al
 
+    ;Writes value
+    push eax
+    call write
 
     ;Arista3 
     lea eax, [pixels]    ;2/3 * pixel1
@@ -111,6 +119,10 @@ interpolacion:
     add ebx,2
     mov byte [ebx], al
     
+    ;Writes value
+    push eax
+    call write
+
     ;Arista4 
     lea eax, [pixels]    ;2/3 * pixel2
     add eax, 1
@@ -141,6 +153,10 @@ interpolacion:
     add ebx,3
     mov byte [ebx], al
     
+    ;Writes value
+    push eax
+    call write
+
     ;Arista5 
     lea eax, [pixels]    ;1/3 * pixel1
     mov ebx, 0
@@ -169,6 +185,10 @@ interpolacion:
     lea ebx,[aristas]
     add ebx,4
     mov byte [ebx], al
+
+    ;Writes value
+    push eax
+    call write
 
     ;Arista6 
     lea eax, [pixels]    ;1/3 * pixel2
@@ -200,6 +220,10 @@ interpolacion:
     add ebx,5
     mov byte [ebx], al
 
+    ;Writes value
+    push eax
+    call write
+
     ;Arista7 
     lea eax, [pixels]    ;2/3 * pixel3
     add eax, 2
@@ -229,6 +253,10 @@ interpolacion:
     lea ebx,[aristas]
     add ebx,6
     mov byte [ebx], al
+
+    ;Writes value
+    push eax
+    call write
 
     ;Arista8 
     lea eax, [pixels]    ;1/3 * pixel3
@@ -260,6 +288,10 @@ interpolacion:
     add ebx,7
     mov byte [ebx], al
 
+    ;Writes value
+    push eax
+    call write
+
     ;Centro1 
     lea eax, [aristas]    ;2/3 * aristas3
     add eax, 2
@@ -288,6 +320,10 @@ interpolacion:
 
     lea ebx,[centro]
     mov byte [ebx], al
+
+    ;Writes value
+    push eax
+    call write
 
     ;Centro2 
     lea eax, [aristas]    ;1/3 * aristas3
@@ -319,6 +355,10 @@ interpolacion:
     add ebx, 1
     mov byte [ebx], al
 
+    ;Writes value
+    push eax
+    call write
+
     ;Centro3 
     lea eax, [aristas]    ;2/3 * aristas5
     add eax, 4
@@ -349,6 +389,10 @@ interpolacion:
     add ebx,2
     mov byte [ebx], al
 
+    ;Writes value
+    push eax
+    call write
+
     ;Centro4 
     lea eax, [aristas]    ;1/3 * aristas5
     add eax, 4
@@ -378,5 +422,9 @@ interpolacion:
     lea ebx,[centro]
     add ebx,3
     mov byte [ebx], al
+
+    ;Writes value
+    push eax
+    call write
 
     ret

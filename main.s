@@ -122,6 +122,10 @@ write_call:
     jmp read
 
 exit:
+    ;close file 
+    mov eax, 6      
+    int 0x80
+
     ; Exit program
     mov eax, 1              
     xor ebx, ebx           

@@ -10,8 +10,8 @@ write:
     ;open file for write
     mov eax, 5          
     mov ebx, filename   
-    mov ecx, 0x441      
-    mov edx, 0644       
+    mov ecx, 0x442      
+    mov edx, 420       
     int 0x80            
 
     mov edx, eax ;file descriptor
@@ -52,12 +52,14 @@ conversion_num:
 write_loop:
 
     ;extract value from buffer
+    sub ecx, 1
     lea ebx, [wbuffer]
     add ebx, ecx
     mov byte al, [ebx] 
     mov byte [wByte], al
 
     pop ebx  ;file descriptor
+    push ecx ;save counter
 
     ;write value
     mov eax, 4          
@@ -65,18 +67,23 @@ write_loop:
     mov edx, 1          
     int 0x80
 
+    pop ecx ;retrieve counter
+
     push ebx  ;file descriptor
 
-    sub ecx, 1
-    cmp ecx, -1
+    cmp ecx, 0
     jne write_loop
 
     pop ebx   ;file descriptor
 
     ;write value
     mov eax, 4          
-    mov ecx, new    
+    mov ecx, newline    
     mov edx, 1          
+    int 0x80
+
+    ;close file 
+    mov eax, 6      ; sys_close
     int 0x80
 
     ret
