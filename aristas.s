@@ -1,25 +1,28 @@
-section .data
-    pathname DD "/home/jaam/Documents/jarroyo_computer_architecture_1_2025/aristas.img"
 section .bss
     pixels: resb 4
     aristas: resb 8
+    centro: resb 4
 section .text
-global aristas
-aristas:
+global aristas_fun
+aristas_fun:
+    ;Pop return address
+    pop edx
+
     ;Save arguments in pixels
     lea eax, [pixels]
-    add eax,3
     pop ecx
     mov byte [eax], cl  
-    sub ecx,1
+    add eax,1
     pop ecx
     mov byte [eax], cl  
-    sub ecx,1
+    add eax,1
     pop ecx
     mov byte [eax], cl  
-    sub ecx,1
+    add eax,1
     pop ecx
     mov byte [eax], cl  
+
+    push edx    ;save return address
 
     ;Arista1 
     lea eax, [pixels]    ;2/3 * pixel1
@@ -71,7 +74,7 @@ aristas:
     imul eax,ebx
     div ecx
 
-    pop ecx              ;(2/3*pixel1)+(1/3*pixel2)
+    pop ecx              ;(1/3*pixel1)+(2/3*pixel2)
     add eax,ecx
 
     lea ebx,[aristas]
@@ -122,7 +125,7 @@ aristas:
     push eax             ;save result 
 
     lea eax, [pixels]    ;1/3 * pixel4
-    add eax,3
+    add eax, 3
     mov ebx, 0
     mov byte bl, [eax]
     mov eax, 1
@@ -194,6 +197,7 @@ aristas:
     add eax,ecx
 
     lea ebx,[aristas]
+    add ebx,5
     mov byte [ebx], al
 
     ;Arista7 
@@ -249,9 +253,130 @@ aristas:
     imul eax,ebx
     div ecx
 
-    pop ecx              ;(2/3*pixel3)+(1/3*pixel4)
+    pop ecx              ;(1/3*pixel3)+(2/3*pixel4)
     add eax,ecx
 
     lea ebx,[aristas]
-    add ebx,6
+    add ebx,7
     mov byte [ebx], al
+
+    ;Centro1 
+    lea eax, [aristas]    ;2/3 * aristas3
+    add eax, 2
+    mov ebx, 0
+    mov byte bl, [eax]
+    mov eax, 2
+    mov ecx, 3
+    xor edx, edx
+    imul eax,ebx
+    div ecx
+
+    push eax             ;save result 
+
+    lea eax, [aristas]    ;1/3 * aristas4
+    add eax, 3
+    mov ebx, 0
+    mov byte bl, [eax]
+    mov eax, 1
+    mov ecx, 3
+    xor edx, edx
+    imul eax,ebx
+    div ecx
+
+    pop ecx              ;(2/3*aristas3)+(1/3*aristas4)
+    add eax,ecx
+
+    lea ebx,[centro]
+    mov byte [ebx], al
+
+    ;Centro2 
+    lea eax, [aristas]    ;1/3 * aristas3
+    add eax, 2
+    mov ebx, 0
+    mov byte bl, [eax]
+    mov eax, 1
+    mov ecx, 3
+    xor edx, edx
+    imul eax,ebx
+    div ecx
+
+    push eax             ;save result 
+
+    lea eax, [aristas]    ;2/3 * aristas4
+    add eax, 3
+    mov ebx, 0
+    mov byte bl, [eax]
+    mov eax, 2
+    mov ecx, 3
+    xor edx, edx
+    imul eax,ebx
+    div ecx
+
+    pop ecx              ;(1/3*aristas3)+(2/3*aristas4)
+    add eax,ecx
+
+    lea ebx,[centro]
+    add ebx, 1
+    mov byte [ebx], al
+
+    ;Centro3 
+    lea eax, [aristas]    ;2/3 * aristas5
+    add eax, 4
+    mov ebx, 0
+    mov byte bl, [eax]
+    mov eax, 2
+    mov ecx, 3
+    xor edx, edx
+    imul eax,ebx
+    div ecx
+
+    push eax             ;save result 
+
+    lea eax, [aristas]    ;1/3 * aristas6
+    add eax, 5
+    mov ebx, 0
+    mov byte bl, [eax]
+    mov eax, 1
+    mov ecx, 3
+    xor edx, edx
+    imul eax,ebx
+    div ecx
+
+    pop ecx              ;(2/3*aristas3)+(1/3*aristas4)
+    add eax,ecx
+
+    lea ebx,[centro]
+    add ebx,2
+    mov byte [ebx], al
+
+    ;Centro4 
+    lea eax, [aristas]    ;1/3 * aristas5
+    add eax, 4
+    mov ebx, 0
+    mov byte bl, [eax]
+    mov eax, 1
+    mov ecx, 3
+    xor edx, edx
+    imul eax,ebx
+    div ecx
+
+    push eax             ;save result 
+
+    lea eax, [aristas]    ;2/3 * aristas6
+    add eax, 5
+    mov ebx, 0
+    mov byte bl, [eax]
+    mov eax, 2
+    mov ecx, 3
+    xor edx, edx
+    imul eax,ebx
+    div ecx
+
+    pop ecx              ;(1/3*aristas3)+(2/3*aristas4)
+    add eax,ecx
+
+    lea ebx,[centro]
+    add ebx,3
+    mov byte [ebx], al
+
+    ret

@@ -4,7 +4,7 @@ section .bss
     buffer: resb 1
     pixels: resb 4
 section .text
-extern aristas
+extern aristas_fun
 global _start
 
 _start:
@@ -106,7 +106,7 @@ write_call:
     push ecx
 
     ;call aristas
-    call aristas
+    call aristas_fun
 
     jmp exit ;placeholder
 
