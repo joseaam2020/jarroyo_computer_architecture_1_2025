@@ -4,7 +4,7 @@ section .bss
     buffer: resb 1
     pixels: resb 4
 section .text
-extern aristas_fun
+extern interpolacion
 global _start
 
 _start:
@@ -88,6 +88,8 @@ conversion_out:
     jmp  read
 
 write_call:
+    ;save file descriptor (ebx)
+    push ebx
 
     ;Load arguments to stack
     lea eax,[pixels]
@@ -106,9 +108,18 @@ write_call:
     push ecx
 
     ;call aristas
-    call aristas_fun
+    call interpolacion
 
-    jmp exit ;placeholder
+    ;get file descriptor
+    pop ebx
+
+    ;Stack setup 
+    mov  eax,4   ;read 4 numbers
+    push eax
+    mov  eax,-1  ;stack end
+    push eax
+
+    jmp read
 
 exit:
     ; Exit program

@@ -3,8 +3,8 @@ section .bss
     aristas: resb 8
     centro: resb 4
 section .text
-global aristas_fun
-aristas_fun:
+global interpolacion
+interpolacion:
     ;Pop return address
     pop edx
 
