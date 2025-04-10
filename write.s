@@ -80,5 +80,3 @@ write_loop:
     int 0x80
 
     ret
-
-
