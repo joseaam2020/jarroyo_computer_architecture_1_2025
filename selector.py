@@ -2,12 +2,14 @@ from PIL import Image
 import pygame
 import sys
 import numpy as np
+import os
+import subprocess
 
 # Initialize pygame
 pygame.init()
 
 # Load an image
-IMAGE_PATH = "Sargent2.png"  # Change this to your image path
+IMAGE_PATH = "Sargent3.png"  # Change this to your image path
 image = pygame.image.load(IMAGE_PATH)
 
 #Pillow is used to get pixel values
@@ -29,6 +31,7 @@ selected_cell = None
 # Main loop
 running = True
 np_array = np.array([])
+np_array2 = np.array([])
 while running:
     screen.blit(image, (0, 0))
     
@@ -50,6 +53,13 @@ while running:
         cuadrant_img = pygame.image.load("cuadrant_img.png")
         screen.blit(cuadrant_img,(WIDTH,0))
     
+    if (np_array2.size > 0):
+        np_array2 = np_array2.astype(np.uint8) 
+        interpolacion_img = Image.fromarray(np_array2)
+        interpolacion_img.save("interpolacion_img.png")
+        interpolacion_img = pygame.image.load("interpolacion_img.png")
+        screen.blit(interpolacion_img,(WIDTH+cuadrant_img.get_width(),0))
+
     #Update
     pygame.display.flip()
     
@@ -86,7 +96,47 @@ while running:
                             file.write(f"{pixel3}\n")
                             file.write(f"{pixel4}\n")
 
-            #Llamar codigo ensamblador
+            #Delete previos interpolation values
+            if os.path.exists("interpolacion.img"):
+                os.remove("interpolacion.img")
+
+            #Call assembly program
+            cwd = os.getcwd()
+            result = subprocess.run(cwd + "/program")
+            print(result.stdout)
+
+            #Read interpolation results
+            result = np.zeros((CELL_WIDTH+2*(CELL_WIDTH-1),CELL_HEIGHT+2*(CELL_HEIGHT-1)))
+            if os.path.exists("interpolacion.img"):
+                 #Write pixel values to .img
+                with open('pixel.img','r') as file1, open('interpolacion.img','r') as file2:
+                    print(result.shape)
+                    print(result.size)
+                    for m in range(0,result.shape[1]-3,3):
+                        for n in range (0,result.shape[0]-3,3):
+                            for real_y in range(m,m+4):
+                                relative_y = real_y % 4
+                                for real_x in range(n,n+4):
+                                    relative_x = real_x % 4
+                                    match relative_y:
+                                        case 0 | 3: 
+                                            match relative_x:
+                                                case 0 | 3:
+                                                    result[real_x][real_y] = int(file1.readline().split()[0])
+                                                case 1 | 2:
+                                                    result[real_x][real_y] = int(file2.readline().split()[0])
+                                        case 1 | 2:
+                                            result[real_x][real_y] = int(file2.readline().split()[0])
+                    #np.set_printoptions(threshold=np.inf)
+                    #print(result)
+                    np_array2 = result
+                        
+
+
+
+                                        
+
+                    
 
             
 
