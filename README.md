@@ -23,6 +23,7 @@ python3 selector.py
 
 Seleccionar un cuadrante en la interfaz: 
 
+![Prueba Interfaz](./images/prueba.jpeg)
 
   
     
