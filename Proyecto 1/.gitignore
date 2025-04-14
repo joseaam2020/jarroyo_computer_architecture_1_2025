@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+pixel.img
+interpolacion.img
+cuadrant_img.png
+*.o
+program
+interpolacion_img.png
