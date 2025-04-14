@@ -7,6 +7,7 @@ Herramientas:
   4. Pillow
      
 Ejecutar los siguientes comandos (Utilizando Ubuntu):  
+
   sudo apt-get install nasm
   
   sudo apt-get install python3-pygame
