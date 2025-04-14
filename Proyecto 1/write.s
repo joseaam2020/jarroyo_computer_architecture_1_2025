@@ -1,5 +1,5 @@
 section .data
-    filename DD "/home/jaam/Documents/jarroyo_computer_architecture_1_2025/interpolacion.img"
+    filename DD "interpolacion.img"
     newline db 0xa
 section .bss 
     wbuffer: resb 4

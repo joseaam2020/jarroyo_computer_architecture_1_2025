@@ -1,5 +1,5 @@
 section .data
-    pathname DD "/home/jaam/Documents/jarroyo_computer_architecture_1_2025/pixel.img"
+    pathname DD "pixel.img"
 section .bss
     buffer: resb 1
     pixels: resb 4
